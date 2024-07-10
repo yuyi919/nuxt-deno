@@ -45,7 +45,7 @@ let ws: WebSocket | undefined = undefined
 const log = console.log
 const connect = async () => {
   const isSecure = location.protocol === "https:";
-  const url = (isSecure ? "wss://" : "ws://") + location.host + "/api/hello";
+  const url = (isSecure ? "wss://" : "ws://") + location.host + "/api/hello2";
   if (ws) {
     log("ws", "Closing previous connection before reconnecting...");
     ws.close();
