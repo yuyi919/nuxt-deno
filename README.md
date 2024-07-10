@@ -2,7 +2,7 @@
 
 A collaborative todo-list app built using [Nuxt](https://nuxt.com) with server-side rendering on the edge on [Deno Deploy](https://deno.com/deploy) and [Deno KV](https://docs.deno.com/kv/manual) as database.
 
-Demo: https://nuxt-todos-kv.deno.dev
+Demo: https://yuyi-nuxt-deno-19.deno.dev
 
 It also leverages [Deno KV Watch](https://deno.com/blog/kv-watch) and Server-Sent Events to update the UI in real-time for a shared todo list.
 

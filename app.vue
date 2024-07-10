@@ -5,7 +5,7 @@ useSeoMeta({
     'A hosted demo showcasing Nuxt running on Deno Deploy using Deno KV + Watch feature.',
   ogSiteName: 'Nuxt Todos Deno KV',
   ogType: 'website',
-  ogImage: 'https://nuxt-todos-kv.deno.dev/social-image.png',
+  ogImage: 'https://yuyi-nuxt-deno-19.deno.dev/social-image.png',
   twitterImage: 'https://nuxt-guestbook.pages.dev/social-image.png',
   twitterCard: 'summary_large_image'
 })

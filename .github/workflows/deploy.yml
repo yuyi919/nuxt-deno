@@ -46,6 +46,6 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "nuxt-todos-kv"
+          project: "yuyi-nuxt-deno-19"
           entrypoint: "server/index.ts" # 📝 Update the entrypoint if necessary
           root: ".output" # 📝 Update the root if necessary
