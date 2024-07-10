@@ -1,0 +1,15 @@
+{
+  "date": "2024-07-10T04:39:15.434Z",
+  "preset": "deno_deploy",
+  "framework": {
+    "name": "nuxt",
+    "version": "3.12.3"
+  },
+  "versions": {
+    "nitro": "2.9.7"
+  },
+  "commands": {
+    "preview": "",
+    "deploy": "cd ./ && deployctl deploy --project=<project_name> server/index.ts"
+  }
+}

@@ -39,10 +39,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: "pnpm install"
-      - name: Build step
-        run: "npx nuxt build --preset=deno_deploy"
-        env:
-          NUXT_UI_PRO_LICENSE: ${{ secrets.NUXT_UI_PRO_LICENSE }}
+      # - name: Build step
+      #   run: "npx nuxt build --preset=deno_deploy"
+      #   env:
+      #     NUXT_UI_PRO_LICENSE: ${{ secrets.NUXT_UI_PRO_LICENSE }}
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
