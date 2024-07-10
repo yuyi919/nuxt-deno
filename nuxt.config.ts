@@ -1,3 +1,5 @@
+import * as path from "path";
+
 export default defineNuxtConfig({
   // extends: ["@nuxt/ui-pro"],
   modules: ["@nuxt/ui"],
@@ -10,16 +12,20 @@ export default defineNuxtConfig({
     transpile: [
       // "@satorijs/core",
       // "@cordisjs/core",
-      "readable-stream",
-      "string_decoder",
+      // "readable-stream",
+      // "string_decoder",
     ],
+  },
+  alias: {
+    ws: path.join(__dirname, "node_modules/ws/wrapper.mjs"),
+    events: path.join(__dirname, "node_modules/eventemitter2"),
   },
   nitro: {
     rollupConfig: {
-      // external: ["string_decoder"],
+      external: ["string_decoder", "bufferutil", "utf-8-validate"],
     },
     externals: {
-      // external: ["string_decoder"],
+      external: ["string_decoder", "bufferutil", "utf-8-validate"],
     },
     experimental: {
       websocket: true,

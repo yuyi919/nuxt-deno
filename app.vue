@@ -45,7 +45,7 @@ let ws: WebSocket | undefined = undefined
 const log = console.log
 const connect = async () => {
   const isSecure = location.protocol === "https:";
-  const url = (isSecure ? "wss://" : "ws://") + location.host + "/api/hello2";
+  const url = (isSecure ? "wss://" : "ws://") + location.host + "/api/hello";
   if (ws) {
     log("ws", "Closing previous connection before reconnecting...");
     ws.close();
@@ -73,6 +73,11 @@ const connect = async () => {
   });
 };
 onMounted(async () => {
+  // $fetch<{}>("/api/accessToken", {
+  //   method: "POST",
+  //   body: {},
+  // });
+  // $fetch("/api/connect/gateway")
   connect();
 })
 </script>

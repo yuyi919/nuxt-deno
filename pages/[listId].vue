@@ -16,13 +16,13 @@ function newList () {
 }
 
 onMounted(() => {
-  toast.add({
-    title: 'Shared Todo List Created',
-    description: 'Share this page to collaborate with others.'
-  })
-  new EventSource(`/api/${listId}`).addEventListener('message', (event) => {
-    todos.value = JSON.parse(event.data)
-  })
+  // toast.add({
+  //   title: 'Shared Todo List Created',
+  //   description: 'Share this page to collaborate with others.'
+  // })
+  // new EventSource(`/api/${listId}`).addEventListener('message', (event) => {
+  //   todos.value = JSON.parse(event.data)
+  // })
 })
 
 async function addTodo() {
