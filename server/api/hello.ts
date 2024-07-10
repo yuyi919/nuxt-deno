@@ -23,16 +23,16 @@ class WsClient {
     config: $config(),
   };
   constructor(public socket: WS) {
-    socket.on("error", (error) => {
+    socket.addEventListener("error", (error) => {
       console.error(error);
     });
-    socket.on("open", () => {
+    socket.addEventListener("open", () => {
       console.log("ws open");
     });
-    socket.on("close", () => {
+    socket.addEventListener("close", () => {
       console.log("ws close");
     });
-    socket.on("message", (data) => {
+    socket.addEventListener("message", (data) => {
       const parsed: Payload = JSON.parse(data.toString());
       console.log("message", parsed);
     });
