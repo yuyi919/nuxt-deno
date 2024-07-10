@@ -49,7 +49,7 @@ async function deleteTodo(todoId) {
 </script>
 
 <template>
-  <UPageBody>
+  <div>
     <UAlert color="blue" variant="subtle" title="Share this page to collaborate with others." :actions="[{ label: 'Copy URL', click: copyUrl }, { label: 'New List', click: newList }]" />
     <form class="mt-6 flex gap-1" @submit.prevent="addTodo">
       <UInput v-model="newTodo" size="xl" required placeholder="Add a todo item" class="flex-1" />
@@ -82,5 +82,5 @@ async function deleteTodo(todoId) {
         />
       </li>
     </ul>
-  </UPageBody>
+  </div>
 </template>
