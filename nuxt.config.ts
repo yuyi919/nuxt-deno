@@ -6,7 +6,21 @@ export default defineNuxtConfig({
     icons: ["heroicons", "simple-icons"],
   },
 
+  build: {
+    transpile: [
+      // "@satorijs/core",
+      // "@cordisjs/core",
+      "readable-stream",
+      "string_decoder",
+    ],
+  },
   nitro: {
+    rollupConfig: {
+      external: ["string_decoder"],
+    },
+    externals: {
+      external: ["string_decoder"],
+    },
     experimental: {
       websocket: true,
     },
