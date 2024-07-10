@@ -1,12 +1,13 @@
 export default defineNuxtConfig({
-  extends: [
-    '@nuxt/ui-pro'
-  ],
-  modules: [
-    '@nuxt/ui',
-  ],
+  extends: [],
+  modules: ["@nuxt/ui"],
   ui: {
-    icons: ['heroicons', 'simple-icons']
+    icons: ["heroicons", "simple-icons"],
+  },
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
   },
   devtools: { enabled: true },
-})
+});
