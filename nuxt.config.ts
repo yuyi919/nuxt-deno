@@ -16,10 +16,10 @@ export default defineNuxtConfig({
   },
   nitro: {
     rollupConfig: {
-      external: ["string_decoder"],
+      // external: ["string_decoder"],
     },
     externals: {
-      external: ["string_decoder"],
+      // external: ["string_decoder"],
     },
     experimental: {
       websocket: true,
