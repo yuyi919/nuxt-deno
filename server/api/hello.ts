@@ -1,18 +1,22 @@
 // import "node-fetch-native/polyfill"
 // import { Wss } from "@/server/utils/wss.mjs";
-import { WebSocket as WS } from "ws";
+// import { WebSocket as ws } from "ws";
 // import { createRequire } from "node:module";
 // const require = createRequire(import.meta.url);
 // export default defineWebSocketHandler({
 //   open() {
 //     const StringDecoder = require("string_decoder").StringDecoder;
 //   },
+
+import { QQ } from "#imports";
+
 // });
 const config = {
   timeout: undefined,
   headers: {},
 };
 const getGateway = async () => (await $get("/gateway")) as { url: string };
+// curl --location 'https://bots.qq.com/app/getAppAccessToken' --header 'Content-Type: application/json' --data '{"appId": "APPID","clientSecret": "CLIENTSECRET"}'
 
 class WsClient {
   _sessionId = "";
@@ -22,7 +26,7 @@ class WsClient {
     logger: console,
     config: $config(),
   };
-  constructor(public socket: WS) {
+  constructor(public socket: WebSocket) {
     socket.addEventListener("error", (error) => {
       console.error(error);
     });
@@ -32,13 +36,13 @@ class WsClient {
     socket.addEventListener("close", () => {
       console.log("ws close");
     });
-    socket.addEventListener("message", (data) => {
+    socket.addEventListener("message", ({ data }) => {
       const parsed: Payload = JSON.parse(data.toString());
       console.log("message", parsed);
     });
   }
 
-  heartbeat(socket: WS) {
+  heartbeat(socket: WebSocket) {
     socket.send(
       JSON.stringify({
         op: Opcode.HEARTBEAT,
@@ -47,7 +51,7 @@ class WsClient {
     );
   }
 
-  accept(socket: WS) {
+  accept(socket: WebSocket) {
     socket.addEventListener("message", async ({ data }) => {
       const parsed: Payload = JSON.parse(data.toString());
       // this.bot.logger.debug("websocket receives %o", parsed);
@@ -112,6 +116,22 @@ class WsClient {
         // const session = await adaptSession(this.bot, parsed);
         // if (session) this.bot.dispatch(session);
         // this.bot.logger.debug(session)
+        if (parsed.t === "MESSAGE_CREATE") {
+          const payload: QQ.Message.ChannelRequest = {
+            content: JSON.stringify(parsed),
+            // message_reference: {
+            //   message_id: parsed.d?.id!,
+            // },
+            // event_id: "id" in parsed ? parsed.id as string : undefined,
+            msg_id: parsed.d?.id,
+          };
+          console.log(await $get(`/guilds/${parsed.d!.guild_id!}`));
+          console.log(await $get(`/channels/${parsed.d!.channel_id!}`));
+          console.log("post", payload);
+          $post(`/channels/${parsed.d!.channel_id!}/messages`, payload).then(
+            console.log
+          );
+        }
       } else {
         $get("/users/@me").then(console.log);
       }
@@ -129,10 +149,16 @@ class WsClient {
 
   static async link() {
     const { url } = await getGateway();
-    const cl = new WS(url, {
-      handshakeTimeout: config?.timeout,
-      headers: config?.headers,
-    });
+
+    const cl =
+      typeof WebSocket !== "undefined"
+        ? new WebSocket(url)
+        : await (async () => {
+            const { StandardWebSocketClient } = await import(
+              "https://deno.land/x/websocket@v0.1.4/mod.ts"
+            );
+            return new StandardWebSocketClient(url);
+          })();
     const client = new WsClient(cl);
     client.accept(client.socket);
     return client;
@@ -145,11 +171,15 @@ export default defineWebSocketHandler({
     console.log("peer close", peer);
   },
   async open(peer) {
+    const host = await (client ??= WsClient.link());
     console.log("peer open", peer);
-    (await client).socket.on("message", (e) => {
-      const parsed: Payload = JSON.parse(e.toString());
+    host.socket.addEventListener("message", ({ data }) => {
+      const parsed: Payload = JSON.parse(data.toString());
       console.log(peer, parsed);
-      peer.send(e);
+      peer.send({ type: "message", data });
+    });
+    host.socket.addEventListener("error", (error) => {
+      peer.send({ type: "error", error });
     });
   },
 });

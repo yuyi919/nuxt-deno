@@ -22,10 +22,20 @@ export default defineNuxtConfig({
   },
   nitro: {
     rollupConfig: {
-      external: ["string_decoder", "bufferutil", "utf-8-validate"],
+      external: [
+        "string_decoder",
+        "bufferutil",
+        "utf-8-validate",
+        "https://deno.land/x/websocket@v0.1.4/mod.ts",
+      ],
     },
     externals: {
-      external: ["string_decoder", "bufferutil", "utf-8-validate"],
+      external: [
+        "string_decoder",
+        "bufferutil",
+        "utf-8-validate",
+        "https://deno.land/x/websocket@v0.1.4/mod.ts",
+      ],
     },
     experimental: {
       websocket: true,
